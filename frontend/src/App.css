@@ -31,12 +31,15 @@ body {
   font-weight: bolder;
   padding-right: 10px;
 }
-a {
+.headerText {
   /* this removes the line under our links */
   text-decoration: none;
   color: rgb(255, 255, 255);
+  text-decoration: none;
 }
-
+a:hover{
+  color: blue;
+}
 ul {
   list-style-type: none;
   display: flex;
@@ -124,6 +127,16 @@ flex:1;
   align-items: center;
   justify-content: center;
   gap: 30px;
+
+}
+.signUp {
+  border-radius: 14px;
+  border-width: 2px;
+  background-color: #3882f6;
+  color: white;
+  padding: 10px 25px;
+  font-size: 16px;
+  cursor: pointer;
 
 }
 .signUp:hover {

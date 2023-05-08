@@ -1,19 +1,20 @@
 
 import '../App.css';
+import { Link } from "react-router-dom"
 function Navibar() {
   return (
     <div className="header">
     <div className="left">
-      <a className='headerTitle' href="google.com">Finance App</a>
+      <Link style={{ textDecoration: 'none' }} className='headerTitle' to="/">Finance App</Link>
       <ul className="links">
-        <li><a href="google.com">How it Works</a></li>
-        <li><a href="google.com">About Us</a></li>
+        <li> <Link className='headerText' to="/howitworks">How it Works</Link></li>
+        <li> <Link className='headerText' to="/AboutUs">About Us</Link></li>
       </ul>
     </div>
     <div className="right">
-    <ul className="links">
-        <li><a href="google.com">Log In</a></li>
-        <li><a href="google.com">Register</a></li>
+      <ul className="links">
+        <li> <Link className='headerText' to="/LogIn">Log In</Link></li>
+        <li> <Link className='headerText' to="/Register">Register</Link></li>
       </ul>
     </div>
   </div>

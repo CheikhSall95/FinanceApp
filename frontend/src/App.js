@@ -1,47 +1,47 @@
 import { useState } from 'react';
 
 import { Button,Navbar } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Navibar from './components/Navibar';
 import './App.css';
+import ReactDOM from 'react-dom/client'
+import {
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+  useNavigate,
+  useMatch
+} from "react-router-dom"
+import Home from './pages/Home';
+import HowitWorks from './pages/Howitworks';
+import AboutUs from './pages/Aboutus';
+import LogInPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 const App = () => {
-
-
-
-
 
   return (
 
     <div>
-     <Navibar></Navibar>
-     <div className='firstContainer'>
-      <div className='titles'>
-        <span className='title'>Manage Your Money Wisely</span>
-        <span className='LittleTitle'> 
-        Welcome to our budget management application! With our user-friendly interface,<br /> you can easily keep track of your finances and make informed decisions about your spending. </span>
+      <Navibar></Navibar>
+      <Routes>
+
+        <Route path="/" element={< Home/>} />
+        <Route path="/howitworks" element={< HowitWorks/>} />
+        <Route path="/AboutUs" element={< AboutUs/>} />
+        <Route path="/LogIn" element={< LogInPage/>} />
+        <Route path="/Register" element={< RegisterPage/>} />
+      </Routes>
+
+      <div>
+        <i>Note app, Department of Computer Science 2023</i>
       </div>
-      <div className='mainImageCont'> <img className='mainImage' src={require('./assets/money.png')} />
-      </div>
-      </div>
-      <div className= 'secondContainer'>
-        <p className= 'secondText'>Our app allows you to set up a budget for various categories such as groceries, entertainment, rent, and more. <br />You can customize your budget based on your income and expenses,
-           and our app will help you stay on track by <br />sending notifications when you're getting close to your budget limit.</p>
-      </div>
-      <div className= 'thirdContainer'>
-        <div className='titles'>
-          <span className='title'>Visualize your data</span>
-          <span className='LittleTitle'> 
-          We also provide visual representations of your spending habits, allowing you to easily<br /> see where your money is going and make adjustments as necessary. </span>
-        </div>
-        <div className='mainImageCont'> <img className='mainImage' src={require('./assets/graphique.png')} />
-        </div>
-      </div>
-      <div className='fourthContainer'>
-        <div className='signContainer'>
-          <span className='title'>Sign Up Now!</span>
-         <Button className='signUp'>Sign Up</Button>
-        </div>
-      </div>
+
+
+
+
+
+
+
      </div>
 
     
