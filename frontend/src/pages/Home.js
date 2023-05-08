@@ -1,9 +1,22 @@
 import '../App.css';
 import Navibar from '../components/Navibar';
-import React, { useRef } from "react";
+import {
+    Routes,
+    Route,
+    Navigate,
+    useParams,
+    useNavigate,
+    useMatch
+  } from "react-router-dom"
 
 
 function Home() {
+    const navigate = useNavigate()
+    const handleClick = () => {
+        navigate('/Register')
+      }
+
+
     return (
         <div>
        
@@ -32,7 +45,7 @@ function Home() {
       <div className='fourthContainer'>
         <div className='signContainer'>
           <span className='title'>Sign Up Now!</span>
-         <button className='signUp'>Sign Up</button>
+         <button className='signUp' onClick={handleClick}>Sign Up</button>
         </div>
       </div>
    

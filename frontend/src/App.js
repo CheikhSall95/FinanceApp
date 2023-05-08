@@ -32,16 +32,6 @@ const App = () => {
         <Route path="/Register" element={< RegisterPage/>} />
       </Routes>
 
-      <div>
-        <i>Note app, Department of Computer Science 2023</i>
-      </div>
-
-
-
-
-
-
-
      </div>
 
     
