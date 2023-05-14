@@ -1,9 +1,14 @@
 const app = require('./app')
 const config = require('./utils/config')
+const mongoose=require('mongoose')
 
-
-
-app.listen(3001,()=>{
-    console.log("port connected");
+mongoose.connect(config.MONGODB_URI)
+.then(()=>{
+    console.log('mongodb connected');
 })
-
+.catch(()=>{
+    console.log('failed');
+})
+app.listen(config.PORT,()=>{
+    console.log(`Server running on port ${config.PORT}`);
+})

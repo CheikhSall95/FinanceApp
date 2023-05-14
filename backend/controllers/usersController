@@ -1,33 +1,28 @@
-//const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
+const expressAsyncHandler = require('express-async-handler')
 
-
-const registerUser = (async(req,res)=>{
+const registerUser = expressAsyncHandler((async(req,res)=>{
     const{username,email,password}=req.body
     const saltRounds = 10
-    //const passwordHash = await bcrypt.hash(password, saltRounds)
-    const data={
+    const passwordHash = await bcrypt.hash(password, saltRounds)
+    const user={
         username:username,
         email:email,
-        password:password
+        passwordHash:passwordHash
     }
-
+    const userExists =await User.findOne({username:username})
+    if(userExists){
+       throw new Error('User already exists')
+    }
     try{
-        const check=await User.findOne({username:username})
-
-        if(check){
-            res.json("exist").status(500)
-        }
-        else{
-            await User.insertMany([data])
-            res.json("User does not exist").status(200)
-            
-        }
-
+            await User.insertMany([user])
+            res.json(user).status(200)      
     }
-    catch(e){
-        res.json(e.message)
+    catch(error){
+        res.json(error.message)
     }
 })
+)
 
 module.exports = registerUser

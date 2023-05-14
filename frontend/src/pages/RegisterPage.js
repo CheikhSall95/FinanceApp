@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useNavigate, Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate, Link } from 'react-router-dom'
 import '../Register.css';
-import Form from 'react-bootstrap/Form';
+
 
 function RegisterPage() {
     const history=useNavigate();
@@ -16,19 +16,19 @@ function RegisterPage() {
 
         try{
 
-            await axios.post("http://localhost:8000/Register",{
+            await axios.post('http://localhost:8000/Register',{
                 username,email,password
             })
             .then(res=>{
-                if(res.data=="exist"){
-                    alert("User already exists")
+                if(res.data=='User already exists'){
+                    alert('User already exists')
                 }
-                else if(res.data=="User does not exist"){
-                    history("/",{state:{id:username}})
+                else {
+                    history('/',{state:{id:username}})
                 }
             })
             .catch(e=>{
-                alert("wrong credentials")
+                alert('wrong credentials')
                 console.log(e);
             })
 
@@ -45,19 +45,19 @@ function RegisterPage() {
       <div className='registerForm'> 
            <h2>Register</h2>
     <form  onSubmit={handleSubmit}>
-      <div class="user-box">
-        <input type="text" value={username} onChange={(event) => setUsername(event.target.value)}/>
+      <div class='user-box'>
+        <input type='text' value={username} onChange={(event) => setUsername(event.target.value)}/>
         <label>Username</label>
       </div>
-     <div class="user-box">
-        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)}/>
+     <div class='user-box'>
+        <input type='email' value={email} onChange={(event) => setEmail(event.target.value)}/>
         <label>Email</label>
       </div>
-     <div class="user-box">
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)}/>
+     <div class='user-box'>
+        <input type='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
         <label>Password</label>
       </div>
-      <button type = "submit">
+      <button type = 'submit'>
         Register
       </button>
     </form>

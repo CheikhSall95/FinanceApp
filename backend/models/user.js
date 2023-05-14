@@ -1,7 +1,7 @@
 
-const mongoose=require("mongoose")
+const mongoose=require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
-
+const bcrypt = require('bcryptjs')
 
 const userSchema =new mongoose.Schema({
     username:{
@@ -13,10 +13,12 @@ const userSchema =new mongoose.Schema({
         type:String,
         required:[true, 'The Email is required']
     },
-    password:{
+    passwordHash:{
         type:String,
         required:[true, 'The password is required']
     }
+
+
 })
 
 
@@ -30,9 +32,8 @@ userSchema.set('toJSON', {
     }
   })
 
-
 userSchema.plugin(uniqueValidator)
 
-const User = mongoose.model("User",userSchema )
+const User = mongoose.model('User',userSchema )
 
 module.exports=User
