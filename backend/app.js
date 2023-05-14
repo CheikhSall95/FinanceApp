@@ -1,48 +1,31 @@
 const express = require("express")
-const User = require("./mongo")
+const User = require("./models/user")
 const cors = require("cors")
 const app = express()
+const mongoose=require("mongoose")
+const userRouter = require('./routes/usersRouter')
+
+const config = require('./utils/config')
+const registerUser = require('./controllers/usersController')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-
+mongoose.connect(config.MONGODB_URI)
+.then(()=>{
+    console.log("mongodb connected");
+})
+.catch(()=>{
+    console.log('failed');
+})
 
 app.get("/",cors(),(req,res)=>{
 
 })
 
-
-app.post("/",async(req,res)=>{
-    const{email,password}=req.body
-
-    try{
-        const check=await collection.findOne({email:email})
-
-        if(check){
-            res.json("exist")
-        }
-        else{
-            res.json("notexist")
-        }
-
-    }
-    catch(e){
-        res.json("fail")
-    }
-
-})
-
-
-
-app.post("/Register",async(req,res)=>{
-    const{username,email,password}=req.body
-
-    const data={
-        username:username,
-        email:email,
-        password:password
-    }
+app.use('/',userRouter)
+app.post("/login",async(req,res)=>{
+    const{username,password}=req.body
 
     try{
         const check=await User.findOne({username:username})
@@ -51,8 +34,7 @@ app.post("/Register",async(req,res)=>{
             res.json("exist")
         }
         else{
-            res.json("User does not exist")
-            await User.insertMany([data])
+            res.json("User does not exit")
         }
 
     }
@@ -62,6 +44,9 @@ app.post("/Register",async(req,res)=>{
 
 })
 
-app.listen(3001,()=>{
-    console.log("port connected");
+
+app.listen(config.PORT,()=>{
+    console.log(`Server running on port ${config.PORT}`);
 })
+
+module.exports = app
