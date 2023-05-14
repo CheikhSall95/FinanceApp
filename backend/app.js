@@ -13,7 +13,7 @@ app.get('/',cors(),(req,res)=>{
 
 })
 
-app.use('/',userRouter)
+app.use('/api/users',userRouter)
 app.post('/login',async(req,res)=>{
     const{username,password}=req.body
 

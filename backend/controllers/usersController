@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 const expressAsyncHandler = require('express-async-handler')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const registerUser = expressAsyncHandler((async(req,res)=>{
     const{username,email,password}=req.body
@@ -25,4 +27,50 @@ const registerUser = expressAsyncHandler((async(req,res)=>{
 })
 )
 
-module.exports = registerUser
+
+const fetchUsers = expressAsyncHandler((async(req,res)=>{
+    
+    try{
+      const users = await User.find({})
+            res.json(users)    
+    }
+    catch(error){
+        res.json(error.message)
+    }
+})
+)
+
+
+const loginUser = expressAsyncHandler((async(req,res)=>{
+    const{username,password}=req.body
+
+    const user = await User.findOne({ username }) // find the user in the db
+    const passwordCorrect = user === null
+      ? false
+      : await bcrypt.compare(password, user.passwordHash) // check if user password matches
+    if (!user){
+        res.status(401)
+        throw new Error('Invalid Username')
+    }
+    else if (!passwordCorrect) {
+        res.status(401)
+        throw new Error('Invalid Password')
+    }
+    else {
+        // if user is found, generate a token
+        const generateToken = {
+            username: user.username,
+            id: user._id,
+        }
+        const token = jwt.sign(generateToken, process.env.SECRET, {expiresIn: '1d'})
+        
+        res.json({
+            id : user._id,
+            username : user.username,
+            email : user.email,
+            token : token
+        })
+    }
+})
+)
+module.exports = {registerUser, fetchUsers, loginUser}

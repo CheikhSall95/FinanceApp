@@ -16,7 +16,7 @@ function RegisterPage() {
 
         try{
 
-            await axios.post('http://localhost:8000/Register',{
+            await axios.post('http://localhost:8000/api/users/Register',{
                 username,email,password
             })
             .then(res=>{
