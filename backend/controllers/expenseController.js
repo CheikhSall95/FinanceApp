@@ -22,7 +22,8 @@ const createExpense = expressAsyncHandler(async (req, res) => {
 const fetchAllExpenses = expressAsyncHandler(async (req, res) => {
   const { page } = req.query
 	try {
-		const expense = await Expense.paginate({}, { limit: 10, page: Number(page) })
+     //instead of using find we use paginate to limit results  //populate user
+		const expense = await Expense.paginate({}, { limit: 10, page: Number(page), populate: 'user'  })
 		res.json(expense)
 	} catch (error) {
 		res.json(error)

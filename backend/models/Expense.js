@@ -27,6 +27,17 @@ const expenseSchema = new mongoose.Schema({
     required: [true, 'User ID is required']
   }
 
+},
+{
+  //populate user
+toJSON: {
+  virtual:true,
+},
+toObject:{
+  virtual:true,
+}
+
+
 })
 
 

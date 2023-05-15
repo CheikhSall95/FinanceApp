@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-import { Button,Navbar } from 'react-bootstrap';
 import Navibar from './components/Navibar';
 import './App.css';
 import ReactDOM from 'react-dom/client'

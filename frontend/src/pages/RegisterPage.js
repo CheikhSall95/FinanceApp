@@ -2,67 +2,78 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import '../Register.css';
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
+
+//Form validation
+const formSchema = Yup.object({
+  email: Yup.string().required("Email is required"),
+  password: Yup.string().required("Password is required"),
+  username: Yup.string().required("Username is required"),
+
+});
 
 
 function RegisterPage() {
-    const history=useNavigate();
+  const history = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  // formirk form
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    onSubmit: values => {
+      console.log(values)
+    },
+    validationSchema: formSchema,
+  })
 
-    async function handleSubmit(e){
-        e.preventDefault();
-
-        try{
-
-            await axios.post('http://localhost:8000/api/users/Register',{
-                username,email,password
-            })
-            .then(res=>{
-                if(res.data=='User already exists'){
-                    alert('User already exists')
-                }
-                else {
-                    history('/',{state:{id:username}})
-                }
-            })
-            .catch(e=>{
-                alert('wrong credentials')
-                console.log(e);
-            })
-
-        }
-        catch(e){
-            console.log(e);
-
-        }
-
-    }
-
-
-    return (
-      <div className='registerForm'> 
-           <h2>Register</h2>
-    <form  onSubmit={handleSubmit}>
-      <div class='user-box'>
-        <input type='text' value={username} onChange={(event) => setUsername(event.target.value)}/>
-        <label>Username</label>
+  return (
+    <div >
+      {/* Err */}
+      <div className="formAlert">
+        {formik.touched.username && formik.errors.username}<br />
+        {formik.touched.email && formik.errors.email}<br />
+        {formik.touched.password && formik.errors.password}
       </div>
-     <div class='user-box'>
-        <input type='email' value={email} onChange={(event) => setEmail(event.target.value)}/>
-        <label>Email</label>
+      <div className='registerForm'>
+
+        <h2>Register</h2>
+
+        <form onSubmit={formik.handleSubmit}>
+          <div class='user-box'>
+            <input
+              type='text'
+              value={formik.values.username}
+              onChange={formik.handleChange('username')}
+              onBlur={formik.handleBlur('username')} />
+            <label>Username</label>
+          </div>
+          <div class='user-box'>
+            <input type='email'
+              value={formik.values.email}
+              onChange={formik.handleChange('email')}
+              onBlur={formik.handleBlur('email')} />
+            <label>Email</label>
+          </div>
+
+          <div class='user-box'>
+            <input type='password'
+              value={formik.values.password}
+              onChange={formik.handleChange('password')}
+              onBlur={formik.handleBlur('password')} />
+            <label>Password</label>
+          </div>
+          <button type='submit'>
+            Register
+          </button>
+        </form>
       </div>
-     <div class='user-box'>
-        <input type='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
-        <label>Password</label>
-      </div>
-      <button type = 'submit'>
-        Register
-      </button>
-    </form>
-      </div>
-    );
+    </div>
+  );
 }
 
 export default RegisterPage

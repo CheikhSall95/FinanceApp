@@ -25,7 +25,17 @@ const incomeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, // must be mongodb id
     ref: 'User',// the model the we are referring to
     required: [true, 'User ID is required']
-  }
+  },
+
+},
+{
+   //populate user
+toJSON: {
+  virtual:true,
+},
+toObject:{
+  virtual:true,
+}
 
 })
 
