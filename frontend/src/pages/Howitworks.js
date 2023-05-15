@@ -4,12 +4,12 @@ import React, { useRef } from "react";
 
 
 function HowitWorks() {
-    return (
-        <div>
-       
-       
-How it Works??
-        </div>
-    )
-  }
+  return (
+    <div>
+
+
+      How it Works??
+    </div>
+  )
+}
 export default HowitWorks;

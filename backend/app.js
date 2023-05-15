@@ -1,8 +1,9 @@
 const express = require('express')
-const User = require('./models/user')
 const cors = require('cors')
 const app = express()
 const userRouter = require('./routes/usersRouter')
+const incomeRouter = require('./routes/incomeRouter')
+const expenseRouter = require('./routes/incomeRouter')
 const {errorHandler, notFound} = require('./middlewares/errorMiddleware')
 
 app.use(express.json())
@@ -14,25 +15,8 @@ app.get('/',cors(),(req,res)=>{
 })
 
 app.use('/api/users',userRouter)
-app.post('/login',async(req,res)=>{
-    const{username,password}=req.body
-
-    try{
-        const check=await User.findOne({username:username})
-
-        if(check){
-            res.json('exist')
-        }
-        else{
-            res.json('User does not exit')
-        }
-
-    }
-    catch(e){
-        res.json('fail')
-    }
-
-})
+app.use('/api/income',incomeRouter)
+app.use('/api/expense',expenseRouter)
 app.use(notFound)
 app.use(errorHandler)
 
